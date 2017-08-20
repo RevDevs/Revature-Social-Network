@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Events and Event handling</title>
+</head>
+<body>
+
+	<h1>Events with handlers</h1>
+	<br>
+
+	<h3>Marker(click) zoom in from 5 to 9</h3>
+	<p>i think it would be interesting using this with clusters, in the
+		sense that home page is a big map of the US with clusters and instead
+		of having to zoom in manually we can automatically zoom them in</p>
+
+	<div id="map1" style="width: 100%; height: 500px"></div>
+
+	<br>
+
+	<h4>On top of ^, we can have a pan back feature</h4>
+
+	<div id="map11" style="width: 100%; height: 500px"></div>
+
+	<br>
+	<br>
+
+	<h3>Info window on click</h3>
+	<p>Adding on to info window example, now we can display info on the
+		marker being clicked</p>
+	<p>only problem i see is that, if a user keeps clicking, then it
+		keeps making more info windows on top off each other and so far u have
+		to close out each one or reload page</p>
+	<div id="mapI" style="width: 100%; height: 500px"></div>
+
+	<br>
+	<br>
+
+	<h3>Marker(place anywhere) with cords</h3>
+	<p>places a marker where u click, with an info window</p>
+	<p>no delete for marker yet, so they all stay even when info window
+		is exited</p>
+	<div id="map2" style="width: 100%; height: 500px"></div>
+
+	<br>
+	<br>
+
+	<script>
+function myMap() {
+	/*Zoom*/
+	  var myCenter1 = new google.maps.LatLng(51.508742,-0.120850);
+	  var mapCanvas1 = document.getElementById("map1");
+	  var mapOptions1 = {center: myCenter1, zoom: 5};
+	  
+	  var map1 = new google.maps.Map(mapCanvas1, mapOptions1);
+	  
+	  var marker1 = new google.maps.Marker({position:myCenter1});
+	  marker1.setMap(map1);
+
+	  // Zoom to 9 when clicking on marker
+	  google.maps.event.addListener(marker1,'click',function() {
+	    map1.setZoom(9);
+	    map1.setCenter(marker1.getPosition());
+	  });
+	  
+	  /*Pan back*/
+	  
+	  var myCenter11 = new google.maps.LatLng(51.508742,-0.120850);
+	  var mapCanvas11 = document.getElementById("map11");
+	  var mapOptions11 = {center: myCenter11, zoom: 5};
+	  
+	  var map11 = new google.maps.Map(mapCanvas11, mapOptions11);
+	  
+	  var marker11 = new google.maps.Marker({position:myCenter11});
+	  marker11.setMap(map11);
+
+	  // Zoom to 9 when clicking on marker then 3000 ms zoom out(~3.5ish secs)
+	  google.maps.event.addListener(marker11,'click',function() {
+		var pos = map11.getZoom();
+		map11.setZoom(9);
+	    map11.setCenter(marker11.getPosition());
+	    window.setTimeout(function() {map11.setZoom(pos);},3000);
+	  });
+	  
+	  /*Info window on click*/
+	  
+	  var myCenterI = new google.maps.LatLng(51.508742,-0.120850);
+	  var mapCanvasI = document.getElementById("mapI");
+	  var mapOptionsI = {center: myCenterI, zoom: 5};
+	  var mapI = new google.maps.Map(mapCanvasI, mapOptionsI);
+	  var markerI = new google.maps.Marker({position:myCenterI});
+	  markerI.setMap(mapI);
+	  google.maps.event.addListener(markerI,'click',function() {
+	    var infowindowI = new google.maps.InfoWindow({
+	      content:"Info brought by click!"
+	    });
+	  infowindowI.open(mapI,markerI);
+	  });
+	  
+	  /*Marker with cords*/
+	  var mapCanvas2 = document.getElementById("map2");
+	  
+	  var myCenter2 = new google.maps.LatLng(51.508742,-0.120850);
+	  var mapOptions2 = {center: myCenter2, zoom: 5};
+	  
+	  var map2 = new google.maps.Map(mapCanvas2, mapOptions2);
+	  
+	  google.maps.event.addListener(map2, 'click', function(event) {
+	    placeMarker(map2, event.latLng);
+	  });
+	}
+
+}
+
+function placeMarker(map, location) {
+	  var marker = new google.maps.Marker({
+	    position: location,
+	    map: map
+	  });
+	  var infowindow = new google.maps.InfoWindow({
+	    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+	  });
+	  infowindow.open(map,marker);
+	}
+
+</script>
+
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFjhl0IPjXKufZIRKTNTb19rFBciobZyk&callback=myMap"></script>
+
+</body>
+</html>

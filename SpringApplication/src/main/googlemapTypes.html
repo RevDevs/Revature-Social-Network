@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Some map types</title>
+</head>
+<body>
+
+<h1>Some map types</h1>
+<br>
+
+<h3>Roadmap type</h3>
+<div id="googleMap1" style="width:400px;height:300px;"></div>
+<br>
+<h3>Hybrid type, satellite +roads</h3>
+<p>has a 45% view of only certain locations, also satellite</p>
+<ul>disable by setTilt(0)/enable setTilt(45)
+
+<li>A compass wheel around the Pan control, allowing you to rotate the image</li>
+<li>A Rotate control between the Pan and Zoom controls, allowing you to rotate the image 90°</li>
+<li>A toggle control for displaying the 45° perspective view, under the Satellite control/label</li>
+
+</ul>
+<div id="googleMap2" style="width:600px;height:600px;"></div>
+<br>
+<h3>Terrain type</h3>
+<div id="googleMap3" style="width:400px;height:300px;"></div>
+<br>
+
+<script>
+function myMap() {
+  var mapOptions1 = {
+    center: new google.maps.LatLng(51.508742,-0.120850),
+    zoom:9,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var mapOptions2 = {
+    center: new google.maps.LatLng(45.434046,12.340284),//(51.508742,-0.120850),//
+    zoom:18,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+  };
+  var mapOptions3 = {
+    center: new google.maps.LatLng(51.508742,-0.120850),
+    zoom:9,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+  
+  var map1 = new google.maps.Map(document.getElementById("googleMap1"),mapOptions1);
+  var map2 = new google.maps.Map(document.getElementById("googleMap2"),mapOptions2);
+  var map3 = new google.maps.Map(document.getElementById("googleMap3"),mapOptions3);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFjhl0IPjXKufZIRKTNTb19rFBciobZyk&callback=myMap"></script>
+
+</body>
+</html>
