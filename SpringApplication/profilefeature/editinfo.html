@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+  <title> Revautre-Social Network: Editing User Info</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <section>
+
+    <h2> Edit Information</h2>
+      <p>
+        here you can edit some of your profile information
+      </p>
+    <div class="jumbotron center" style="margin: auto; line-height: 50px; width: 650px; padding-left: 100px; padding-right: 50px;">
+      <form>
+
+        <table id="userinfo" class="table table-bordered">
+          <thead class="thead-default">
+            <tr>
+              <th colspan="2" style="text-align: center; vertical-align: middle">
+                Info:
+              </th>
+              <th >
+                <div class="checkbox" class="inline">
+                <input type="checkbox" value="unchecked"/><label>Edit</label>
+              </div>
+            </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                First name
+              </td>
+              <td>
+                {{user.first_name}}
+              </td>
+              <td>
+                <input type="text" placeholder="new first name"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Last name
+              </td>
+              <td>
+                {{user.last_name}}
+              </td>
+              <td>
+                <input type="text" placeholder="new last name"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Email
+              </td>
+              <td>
+                {{user.email}}
+              </td>
+              <td>
+                <input type="text" placeholder="new email"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Company
+              </td>
+              <td>
+                {{user.company}}
+              </td>
+              <td>
+                <!-- <button ng-click="()">Change Password</button>
+                this would take them to another page to verify and give choices or possibilities to add new ones -->
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Username
+              </td>
+              <td>
+                {{user.user_name}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Password
+              </td>
+              <td>
+                {{user.pass_word}}
+              </td>
+              <td>
+                <!-- <button ng-click="()">Change Password</button>
+                this would take them to another page to verify and give new password
+                which then would also send email confirmation -->
+                <!--Or if we allow username change also, then we can send them
+                to another page to change user "settings"-->
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td style="text-align: center" colspan="3">
+                <input type="submit" name="ChangeInfo" class="btn btn-primary"/>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+      </form>
+    </div>
+
+  </section>
+</body>
+</html>
