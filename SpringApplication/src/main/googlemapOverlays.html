@@ -14,27 +14,27 @@
 	<div id="map" style="width: 100%; height: 500px"></div>
 	<br>
 	<div id="map1" style="width: 100%; height: 400px"></div>
+	
+	<p>can remove markers from view by "marker.setMap(null)"</p>
+<a href="https://developers.google.com/maps/documentation/javascript/examples/marker-remove">Perfect example of hiding and removing markers</a>
+	<br>
 
-	<br>
-	<h3>Clusters</h3>
-		<a href="https://github.com/googlemaps/js-marker-clusterer">Marker Cluster</a>
-	<br>
 	<br>
 	<h3>Info Windows</h3>
 
-	<div id="mapI" style="width:100%;height:500px"></div>
+	<div id="mapI" style="width: 100%; height: 500px"></div>
 
 	<br>
 	<br>
 	<h3>Circle</h3>
-	
-	<div id="mapC" style="width:100%;height:500px"></div>
+
+	<div id="mapC" style="width: 100%; height: 500px"></div>
 
 	<br>
 	<br>
 	<h3>Custom</h3>
 
-
+	<a href="https://developers.google.com/maps/documentation/javascript/markers">Goes more indepth about markers</a>
 
 	<br>
 
@@ -42,25 +42,24 @@
 	<script>
 		function myMap() {
 			/*Marker*/
-			var myCenter= new google.maps.LatLng(51.508742, -0.120850);
-			
+			var myCenter = new google.maps.LatLng(51.508742, -0.120850);
+
 			var mapOptions1 = {
 				center : myCenter,
 				zoom : 6,
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			};
 
-			var map1 = new google.maps.Map(document
-					.getElementById("map1"), mapOptions1);
-			
+			var map1 = new google.maps.Map(document.getElementById("map1"),
+					mapOptions1);
+
 			var marker1 = new google.maps.Marker({
 				position : myCenter
 			});
 			marker1.setMap(map1);
 
-			
 			///
-			
+
 			var myCenter = new google.maps.LatLng(51.508742, -0.120850);
 			var mapCanvas = document.getElementById("map");
 			var mapOptions = {
@@ -70,46 +69,53 @@
 			var map = new google.maps.Map(mapCanvas, mapOptions);
 			var marker = new google.maps.Marker({
 				position : myCenter
-				//if we want animation, add (animation: google.maps.Animation.Bounce here)
-				//if we want a different icon, add (icon: image file in quotes)
+			//if we want animation, add (animation: google.maps.Animation.Bounce here)
+			//if we want a different icon, add (icon: image file in quotes)
 			});
 			marker.setMap(map);
-			
+
 			/*Circle
 			useful for area post? kind aof like clusters but a little different
-			*/
-			
-			var amsterdam = new google.maps.LatLng(52.395715,4.888916);
+			 */
 
-			  var mapCanvasC = document.getElementById("mapC");
-			  var mapOptionsC = {center: amsterdam, zoom: 7};
-			  var mapC = new google.maps.Map(mapCanvasC,mapOptionsC);
+			var amsterdam = new google.maps.LatLng(52.395715, 4.888916);
 
-			  var myCityC = new google.maps.Circle({
-			    center: amsterdam,
-			    radius: 50000,
-			    strokeColor: "#0000FF",
-			    strokeOpacity: 0.8,
-			    strokeWeight: 2,
-			    fillColor: "#0000FF",
-			    fillOpacity: 0.4
-			  });
-			  myCityC.setMap(mapC);
-			  
-			  /*Info on marker*/
-			  var myCenterI = new google.maps.LatLng(51.508742,-0.120850);
-			  var mapCanvasI = document.getElementById("mapI");
-			  var mapOptionsI = {center: myCenterI, zoom: 5};
-			  var mapI = new google.maps.Map(mapCanvasI, mapOptionsI);
-			  var markerI = new google.maps.Marker({position:myCenterI});
-			  markerI.setMap(mapI);
+			var mapCanvasC = document.getElementById("mapC");
+			var mapOptionsC = {
+				center : amsterdam,
+				zoom : 7
+			};
+			var mapC = new google.maps.Map(mapCanvasC, mapOptionsC);
 
-			  var infowindowI = new google.maps.InfoWindow({
-			    content: "Info for you!"
-			  });
-			  infowindowI.open(mapI,markerI);
+			var myCityC = new google.maps.Circle({
+				center : amsterdam,
+				radius : 50000,
+				strokeColor : "#0000FF",
+				strokeOpacity : 0.8,
+				strokeWeight : 2,
+				fillColor : "#0000FF",
+				fillOpacity : 0.4
+			});
+			myCityC.setMap(mapC);
+
+			/*Info on marker*/
+			var myCenterI = new google.maps.LatLng(51.508742, -0.120850);
+			var mapCanvasI = document.getElementById("mapI");
+			var mapOptionsI = {
+				center : myCenterI,
+				zoom : 5
+			};
+			var mapI = new google.maps.Map(mapCanvasI, mapOptionsI);
+			var markerI = new google.maps.Marker({
+				position : myCenterI
+			});
+			markerI.setMap(mapI);
+
+			var infowindowI = new google.maps.InfoWindow({
+				content : "Info for you!"
+			});
+			infowindowI.open(mapI, markerI);
 		}
-
 	</script>
 
 	<script
