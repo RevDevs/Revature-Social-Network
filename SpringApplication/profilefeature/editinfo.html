@@ -2,122 +2,162 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-  <title> Revautre-Social Network: Editing User Info</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <style>
-
-  </style>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<title>Revautre-Social Network: Editing User Info</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style1.css" />
 </head>
 <body>
 
-  <section>
+	<section>
+	
+	<br>
 
-    <h2> Edit Information</h2>
-      <p>
-        here you can edit some of your profile information
-      </p>
-    <div class="jumbotron center" style="margin: auto; line-height: 50px; width: 650px; padding-left: 100px; padding-right: 50px;">
-      <form>
+		<div id="editProfileInfo" class="jumbotron center"
+			style="margin: auto; line-height: 50px; width: 650px; padding-left: 100px; padding-right: 50px;">
 
-        <table id="userinfo" class="table table-bordered">
-          <thead class="thead-default">
-            <tr>
-              <th colspan="2" style="text-align: center; vertical-align: middle">
-                Info:
-              </th>
-              <th >
-                <div class="checkbox" class="inline">
-                <input type="checkbox" value="unchecked"/><label>Edit</label>
-              </div>
-            </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                First name
-              </td>
-              <td>
-                {{user.first_name}}
-              </td>
-              <td>
-                <input type="text" placeholder="new first name"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Last name
-              </td>
-              <td>
-                {{user.last_name}}
-              </td>
-              <td>
-                <input type="text" placeholder="new last name"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Email
-              </td>
-              <td>
-                {{user.email}}
-              </td>
-              <td>
-                <input type="text" placeholder="new email"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Company
-              </td>
-              <td>
-                {{user.company}}
-              </td>
-              <td>
-                <!-- <button ng-click="()">Change Password</button>
-                this would take them to another page to verify and give choices or possibilities to add new ones -->
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Username
-              </td>
-              <td>
-                {{user.user_name}}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Password
-              </td>
-              <td>
-                {{user.pass_word}}
-              </td>
-              <td>
-                <!-- <button ng-click="()">Change Password</button>
-                this would take them to another page to verify and give new password
-                which then would also send email confirmation -->
-                <!--Or if we allow username change also, then we can send them
-                to another page to change user "settings"-->
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td style="text-align: center" colspan="3">
-                <input type="submit" name="ChangeInfo" class="btn btn-primary"/>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+			<form>
 
-      </form>
-    </div>
+				<table id="profileinfo" class="table table-no-border">
+					<thead class="thead-default">
+						<tr>
+							<th colspan="3"
+								style="text-align: center; vertical-align: middle">Your
+								Info:</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>First name</td>
+							<td>{{user.first_name}}</td>
+							<td><input type="text" placeholder="new first name" /></td>
+						</tr>
+						<tr>
+							<td>Last name</td>
+							<td>{{user.last_name}}</td>
+							<td><input type="text" placeholder="new last name" /></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td>{{user.email}}</td>
+							<td><input type="text" placeholder="new email" /></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="text-align: center" colspan="3"><input
+								type="submit" name="ChangeInfo" class="btn btn-primary" /></td>
+						</tr>
+					</tfoot>
+				</table>
 
-  </section>
+			</form>
+		</div>
+
+		<br> <br>
+
+		<div id="editAccountInfo" class="jumbotron center"
+			style="margin: auto; line-height: 50px; width: 650px; padding-left: 100px; padding-right: 50px;">
+
+			<form>
+
+				<table id="accountinfo" class="table table-no-border">
+					<thead class="thead-default">
+						<tr>
+							<th colspan="3"
+								style="text-align: center; vertical-align: middle">Your
+								Account Info:</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Username</td>
+							<td>{{user.user_name}}</td>
+							<td><input type="text" placeholder="new username" /></td>
+						</tr>
+						<tr>
+							<td>Password</td>
+							<td>{{user.pass_word}}</td>
+							<td><input type="text" placeholder="new password" /></td>
+						</tr>
+						<tr>
+							<td colspan="2"></td>
+							<td><input type="text" placeholder="new password" /></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="3" style="text-align: center; vertical-align: middle">For confirmation:  <input type="text" placeholder="old password" required />
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center" colspan="3"><input
+								type="submit" name="ChangeAccount" class="btn btn-primary" /></td>
+						</tr>
+					</tfoot>
+				</table>
+
+			</form>
+		</div>
+
+		<br> <br>
+
+		<div id="editCompanyInfo" class="jumbotron center"
+			style="margin: auto; line-height: 50px; width: 650px; padding-left: 100px; padding-right: 50px;">
+
+			<form>
+
+				<table id="comapnyinfo" class="table table-no-border">
+					<thead class="thead-default">
+						<tr>
+							<th colspan="3"
+								style="text-align: center; vertical-align: middle">Your
+								Company Info:</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Company name</td>
+							<td>{{company_name}}</td>
+							<td><input type="text" placeholder="new company name" /></td>
+						</tr>
+						<tr>
+							<td>Company Location</td>
+							<td>{{company_location}}</td>
+							<td><input type="text" placeholder="new comapny location" />
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="text-align: center" colspan="3"><input
+								type="submit" name="ChangeCompany" class="btn btn-primary" /></td>
+						</tr>
+					</tfoot>
+				</table>
+
+			</form>
+		</div>
+
+	<br>
+
+	</section>
 </body>
 </html>
