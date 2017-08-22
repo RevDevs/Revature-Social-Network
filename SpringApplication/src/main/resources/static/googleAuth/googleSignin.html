@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id"
+	content="1048369239261-ij0013ugn9tsthehadcoar29mq4f5idb.apps.googleusercontent.com">
+
+
+<title>Google Signin</title>
+
+</head>
+<body>
+
+	<!-- Google signin button -->
+	<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+	<a href="#" onclick="signOut()">Sign out</a>
+
+	<script>
+	function newER() {}
+		function onSignIn(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			console.log('Name: ' + profile.getName());
+			console.log('Image URL: ' + profile.getImageUrl());
+			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+			
+			/*Authentication*/
+			//get user's id token
+			var id_token = googleUser.getAuthResponse().id_token;
+			console.log('Token: '+id_token)
+			//sendTokenToMid(id_token);
+		}
+		
+		//https://developers.google.com/identity/sign-in/web/backend-auth
+		function sendTokenToMid(id_token) {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.onload = function() {
+			  console.log('Signed in as: ' + xhr.responseText);
+			};
+			xhr.send('idtoken=' + id_token);
+		}
+		
+		  function signOut() {
+			    var auth2 = gapi.auth2.getAuthInstance();
+			    auth2.signOut().then(function () {
+			      console.log('User signed out.');
+			    });
+			    //https://developers.google.com/identity/sign-in/web/disconnect
+			    //to completely disconnect account from user, in cases of switching signins or google+ account deactivated or deleted
+			    auth2.disconnect().then(function () {
+			      console.log('User disaccounted out.');
+			    });
+			  }
+	</script>
+
+</body>
+</html>
