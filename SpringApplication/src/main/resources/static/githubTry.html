@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Github</title>
+
+</head>
+<body>
+
+	<div>
+	<!-- https://developer.github.com/apps/building-integrations/setting-up-and-registering-oauth-apps/about-scopes-for-oauth-apps/ -->
+		<a
+			href="https://github.com/settings/connections/applications/299abee678c45d347d13">Check
+			your accepted oauth apps</a> <br>
+			<br>
+			<ul>Github user Scopes
+			<li>(no scope) -> Grants read-only access to public information (includes public user profile info, public repository info, and gists) </li>
+			<li>user -> Grants read/write access to profile info only. Note that this scope includes user:email and user:follow.</li>
+			<li>user:email -> Grants read access to a user's email addresses. user:follow	Grants access to follow or unfollow other users.</li>
+			</ul>
+			
+			<p>Made it work with OkHttp(tutorial here:http://www.vogella.com/tutorials/JavaLibrary-OkHttp/article.html) and Spring Social Github Api</p>
+			<p>Also if the user is alredy accessed thru this link it will resend data to the controller without taking them to authorization spot</p>
+			<p>but codes and access tokens will be different</p>
+			<a href="http://github.com/login/oauth/authorize?scope=user&client_id=299abee678c45d347d13">Login using Github</a>
+			 <p>goes to authorization page then if authorized, send them to /login/github controller</p>
+			 <br>
+<br>
+<h4>Example of sts console view</h4>
+<pre>
+string: code
+code bc6b3eaa19215ca01876
+access_token=85717f682ac790325b73ec56a1c66a5c3ad44fff
+scope=user
+token_type=bearer
+Token: 85717f682ac790325b73ec56a1c66a5c3ad44fff
+Scope: user
+Type: bearer
+Username: KelvinL95
+Name: Kelvin Lane
+Email: kelvin.lane.95@live.com
+Location: Reston, Virgina
+Profile Id: KelvinL95
+Profile URL: https://github.com/KelvinL95
+</pre>
+	</div>
+</body>
+</html>

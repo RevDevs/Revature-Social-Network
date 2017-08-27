@@ -1,8 +1,18 @@
 package com.revature.application.restControllers;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.social.github.api.GitHub;
+import org.springframework.social.github.api.GitHubUserProfile;
+import org.springframework.social.github.api.UserOperations;
+import org.springframework.social.github.api.impl.GitHubTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,12 +25,28 @@ import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.forms.EmployeeForm;
 
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 @RestController
+@PropertySource(value="classpath:loginauth.properties", ignoreResourceNotFound=true)
 @RequestMapping("/authentication")
 public class LoginController {
     
     @Autowired
     EmployeeDao employeeDAO;
+    
+//    //githubId
+//	@Value("${github.client_id}")
+//	private String githubId;
+//    //github secret
+//	@Value("${github.client_secret}")
+//	private String githubSecret;
+    @Autowired
+    Environment env;
+    
     
     /*
      * Main handler for logging in a user
@@ -44,6 +70,79 @@ public class LoginController {
             // Return Failure
             return new RequestStatus(false, "Incorrect password");
         }
+    }
+    
+    /**
+     * Github method for logging in
+     * has an external http post with in it and github objects
+     * 
+     * if you would like to change the url path let me know, i have to change or remove the callback url online
+     * 
+     * ...for this to work we need to map this completely
+     * an example of the url we get is:
+     * http://localhost:8080/login/github?code=32ffc9fd1c0643ae7fa7
+     * 
+     * but i get whitelabel error pages when 
+     * 
+     * 
+     * @throws IOException 
+     */
+    @RequestMapping("/login/github")
+    public RequestStatus loginThruGithub(HttpServletRequest req, HttpSession session) throws IOException {
+
+    	System.out.println("In github login method");
+		String code = req.getParameter("code");
+
+		String neededURL= "https://github.com/login/oauth/access_token";
+		String clientId = env.getProperty("github.client_id");
+		String clientSecret = env.getProperty("github.client_secret");
+		String redirectURL = "http://localhost:8080/login/github";
+
+		HttpUrl.Builder urlBuilder = HttpUrl.parse(neededURL).newBuilder();
+		urlBuilder.addQueryParameter("client_id",clientId);
+		urlBuilder.addQueryParameter("client_secret",clientSecret);
+		urlBuilder.addQueryParameter("code",code);
+		urlBuilder.addQueryParameter("redirect_uri",redirectURL);
+
+		System.out.println(clientId+", "+clientSecret);
+		
+		String fullUrl = urlBuilder.build().toString();
+
+		Request postRequest = new Request.Builder().url(fullUrl).build();
+
+		OkHttpClient client = new OkHttpClient();
+		Response response = client.newCall(postRequest).execute();
+    	
+		String[] seperatedResponse = seperateResponse(response.body().string());
+		
+		GitHub github = new GitHubTemplate(seperatedResponse[0]);
+
+		UserOperations userOP = github.userOperations();
+		GitHubUserProfile profile = userOP.getUserProfile();	
+	
+		System.out.println("Username: "+profile.getUsername());
+		System.out.println("Name: "+profile.getName());
+		System.out.println("Email: "+profile.getEmail());
+		System.out.println("Location: "+profile.getLocation());
+		
+		return new RequestStatus();
+//		return "made it thru github";
+    }
+    
+    public String[] seperateResponse(String full) {
+    	String[] strings = new String[3];
+    	
+		String[] split = full.split("&");
+
+    	String[] splitToken = split[0].split("=");
+		String[] splitScope = split[1].split("=");
+		String[] splitType = split[2].split("=");
+
+		strings[0] = splitToken[1];
+		strings[1] = splitScope[1];
+		strings[2] = splitType[1];
+   	
+    	return strings;
     }
     
     /*
