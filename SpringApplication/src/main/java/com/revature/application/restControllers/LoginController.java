@@ -14,6 +14,7 @@ import org.springframework.social.github.api.GitHubUserProfile;
 import org.springframework.social.github.api.UserOperations;
 import org.springframework.social.github.api.impl.GitHubTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -89,14 +90,17 @@ public class LoginController {
      */
     @RequestMapping("/login/github")
     public RequestStatus loginThruGithub(HttpServletRequest req, HttpSession session) throws IOException {
-
-    	System.out.println("In github login method");
-		String code = req.getParameter("code");
-
-		String neededURL= "https://github.com/login/oauth/access_token";
+//    	System.out.println("Here..");
+    	StringBuilder someInfo = new StringBuilder();
+    	String code = req.getParameter("code");
+//    	System.out.println("code "+code);
+    	
+    	someInfo.append("Code:"+code);
+    	
+   		String neededURL= "https://github.com/login/oauth/access_token";
 		String clientId = env.getProperty("github.client_id");
 		String clientSecret = env.getProperty("github.client_secret");
-		String redirectURL = "http://localhost:8080/login/github";
+		String redirectURL = "http://localhost:8080/authentication/login/github";//if we change redirect on github, thne change this one 2(more validation
 
 		HttpUrl.Builder urlBuilder = HttpUrl.parse(neededURL).newBuilder();
 		urlBuilder.addQueryParameter("client_id",clientId);
@@ -104,7 +108,10 @@ public class LoginController {
 		urlBuilder.addQueryParameter("code",code);
 		urlBuilder.addQueryParameter("redirect_uri",redirectURL);
 
-		System.out.println(clientId+", "+clientSecret);
+//		System.out.println(clientId+", "+clientSecret);
+		
+		someInfo.append(", Client_Id:"+clientId);
+		someInfo.append(", Client_secret:"+clientSecret);
 		
 		String fullUrl = urlBuilder.build().toString();
 
@@ -112,21 +119,27 @@ public class LoginController {
 
 		OkHttpClient client = new OkHttpClient();
 		Response response = client.newCall(postRequest).execute();
+    	String responseBody = response.body().string();
+    	someInfo.append(", Response body: "+responseBody);
     	
-		String[] seperatedResponse = seperateResponse(response.body().string());
+		String[] seperatedResponse = seperateResponse(responseBody);
 		
 		GitHub github = new GitHubTemplate(seperatedResponse[0]);
 
 		UserOperations userOP = github.userOperations();
 		GitHubUserProfile profile = userOP.getUserProfile();	
 	
-		System.out.println("Username: "+profile.getUsername());
-		System.out.println("Name: "+profile.getName());
-		System.out.println("Email: "+profile.getEmail());
-		System.out.println("Location: "+profile.getLocation());
+		someInfo.append(", Username: "+profile.getUsername());
+		someInfo.append(", Name: "+profile.getName());
+		someInfo.append(", Email: "+profile.getEmail());
+		someInfo.append(", Location: "+profile.getLocation());
 		
-		return new RequestStatus();
-//		return "made it thru github";
+//		System.out.println("SomeInfo: "+someInfo);
+		
+		String info = someInfo.toString();
+		RequestStatus rs =new RequestStatus();
+		rs.setMessage(info);
+		return rs;
     }
     
     public String[] seperateResponse(String full) {
@@ -141,7 +154,6 @@ public class LoginController {
 		strings[0] = splitToken[1];
 		strings[1] = splitScope[1];
 		strings[2] = splitType[1];
-   	
     	return strings;
     }
     
