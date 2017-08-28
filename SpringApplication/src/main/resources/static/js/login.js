@@ -20,7 +20,7 @@ app.run(function($rootScope, $http, $location){
 			$rootScope.status = response.data.error + ": " + response.data.exception;
 		});
 	};
-		
+	
 	//Log in if the user has a session
 	$rootScope.autoLogin = function(){
 		$http({
